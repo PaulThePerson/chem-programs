@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 #box {
 	display: flex;
+	flex-wrap: wrap;
 }
 #box div {
 	display: flex;
@@ -9,9 +10,15 @@
 #box p {
 	border-bottom: 1px solid #ccc;
 }
-#box input,
+input,
 #box p {
 	font-family: "Open Sans";
 	margin: 10px;
 	padding: 5px;
+}
+.white {
+	color: #fff;
+}
+.white .mjx-chtml {
+	color: initial;
 }
