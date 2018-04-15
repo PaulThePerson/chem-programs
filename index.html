@@ -2,27 +2,25 @@
 <html>
 
 	<head>
-		<script src="chem.js"></script>
 		<title>Chem?</title>
+		<link rel="stylesheet" type="text/css" href="chem.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 	</head>
 
 	<body>
 		<input id="InputTest">
 		<button id="SolveTest"></button>
-		<table>
-			<tr id="molec">
-				<td>Molecule</td>
-			</tr>
-			<tr id="weight">
-				<td>Atomic Weight</td>
-			</tr>
-			<tr id="ratio">
-				<td>Weight Ratio</td>
-			</tr>
-			<tr id="adjustable">
-				<td>(Adjustable)</td>
-			</tr>
-		</table>
+		
+		<!-- Here is where the prettiness starts -->
+		<div id="box">
+			<div>
+				<p>Molecule</p>
+				<p>Atomic Weight</p>
+				<p>Weight Ratio</p>
+			</div>
+		</div>
+		<script src="chem.js"></script>
 	</body>
 
 </html>
