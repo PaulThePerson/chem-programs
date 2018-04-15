@@ -35,11 +35,16 @@ function formulaRatio(equation){
 }
 
 function makeTable(matrix){
+	var thing = document.getElementById("box");
+	while (thing.children.length > 1) {
+		thing.removeChild(thing.lastChild);
+	}
 	for (var i = 0; i < matrix[0].length; i++) {
 		var box = document.createElement("div");
 		
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
+		a.classList.add("white");
 		box.appendChild(a);
 		
 		var b = document.createElement("p");
@@ -53,8 +58,13 @@ function makeTable(matrix){
 		var d = document.createElement("input");
 		box.appendChild(d);
 		
-		document.getElementById("box").appendChild(box);
+		thing.appendChild(box);
 	}
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
 
 makeTable(formulaRatio("CH4+2O2=CO2+2H2O"));
+
+function thing() {
+	makeTable(formulaRatio(document.getElementById("in").value))
+}
