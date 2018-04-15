@@ -34,30 +34,27 @@ function formulaRatio(equation){
 	return [molec,weight,ratio];
 }
 
-function makeTable(BigArray){
-	BigArray[0].forEach(function(molecule){
-		var molecRow=document.getElementById("molec");
-		var x=molecRow.insertCell(molecRow.length);
-		x.innerHTML=molecule;
-	});
-	BigArray[1].forEach(function(molecule){
-		var weightRow=document.getElementById("weight");
-		var x=weightRow.insertCell(weightRow.length);
-		x.innerHTML=molecule;
-	});
-	BigArray[2].forEach(function(molecule){
-		var ratioRow=document.getElementById("ratio");
-		var x=ratioRow.insertCell(ratioRow.length);
-		x.innerHTML=molecule;
-		var adjRow=document.getElementById("adjustable");
-		x=adjRow.insertCell(adjRow.length);
-		x.innerHTML="<input></input>";
-	});
-	
+function makeTable(matrix){
+	for (var i = 0; i < matrix[0].length; i++) {
+		var box = document.createElement("div");
+		
+		var a = document.createElement("p");
+		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
+		box.appendChild(a);
+		
+		var b = document.createElement("p");
+		b.innerHTML = matrix[1][i];
+		box.appendChild(b);
+		
+		var c = document.createElement("p");
+		c.innerHTML = matrix[2][i];
+		box.appendChild(c);
+		
+		var d = document.createElement("input");
+		box.appendChild(d);
+		
+		document.getElementById("box").appendChild(box);
+	}
 }
 
-//console.log("C6H12O6".match(regex1))
-//console.log(molecularWeight("C6H12O6"))
-document.addEventListener("DOMContentLoaded", function() { 
-	makeTable(formulaRatio("CH4+2O2=CO2+2H2O"));
-});
+makeTable(formulaRatio("CH4+2O2=CO2+2H2O"));
