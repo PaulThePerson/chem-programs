@@ -38,6 +38,15 @@ function formulaRatio(equation) {
 	return [molec,weight,ratio];
 }
 
+function solveRatio(ratio, known, knownIn){
+	ratioNew=[];
+	var x=known/ratio[knownIn];
+	for (var i=0; i<ratio.length; i++){
+		ratioNew.push(ratio[i]*x);
+	}
+	return ratioNew;
+}
+
 function makeTable(matrix){
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
@@ -45,23 +54,23 @@ function makeTable(matrix){
 	}
 	for (var i = 0; i < matrix[0].length; i++) {
 		var box = document.createElement("div");
-		
+
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
 		a.classList.add("white");
 		box.appendChild(a);
-		
+
 		var b = document.createElement("p");
 		b.innerHTML = matrix[1][i];
 		box.appendChild(b);
-		
+
 		var c = document.createElement("p");
 		c.innerHTML = matrix[2][i];
 		box.appendChild(c);
-		
+
 		var d = document.createElement("input");
 		box.appendChild(d);
-		
+
 		thing.appendChild(box);
 	}
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
