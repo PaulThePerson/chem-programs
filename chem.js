@@ -38,10 +38,10 @@ function formulaRatio(equation) {
 	return [molec,weight,ratio];
 }
 
-function solveRatio(ratio, known, knownIn){
-	ratioNew=[];
-	var x=known/ratio[knownIn];
-	for (var i=0; i<ratio.length; i++){
+function solveRatio(ratio, known, knownIn) {
+	var ratioNew = [];
+	var x = known / ratio[knownIn];
+	for (var i = 0; i < ratio.length; i++) {
 		ratioNew.push(ratio[i]*x);
 	}
 	return ratioNew;
