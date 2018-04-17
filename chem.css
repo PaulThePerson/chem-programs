@@ -22,3 +22,6 @@ input,
 .white .mjx-chtml {
 	color: initial;
 }
+.sign {
+	border: none !important;
+}

@@ -32,10 +32,10 @@ function formulaRatio(equation) {
 			}
 			ratio.push((parseInt(molecule.match(/^[\d]*/)))*molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
 		});
+		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("=")];
 	} catch (TypeError) {
 		console.log("TypeError");
 	}
-	return [molec,weight,ratio];
 }
 
 function solveRatio(ratio, known, knownIn) {
@@ -47,7 +47,7 @@ function solveRatio(ratio, known, knownIn) {
 	return ratioNew;
 }
 
-function makeTable(matrix){
+function makeTable(matrix) {
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
 		thing.removeChild(thing.lastChild);
@@ -72,6 +72,18 @@ function makeTable(matrix){
 		box.appendChild(d);
 
 		thing.appendChild(box);
+		
+		if (i < matrix[0].length - 1) {
+			box = document.createElement("div");
+
+			var e = document.createElement("p");
+			e.innerHTML = i === matrix[3] ? "\\(=\\)" : "\\(+\\)";
+			e.classList.add("white");
+			e.classList.add("sign");
+			box.appendChild(e);
+
+			thing.appendChild(box);
+		}
 	}
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
