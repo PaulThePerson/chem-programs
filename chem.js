@@ -70,7 +70,12 @@ function makeTable(matrix){
 
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
-		a.classList.add("white");
+		if(matrix[3][i]===0){
+			a.classList.add("white");
+	  }
+		else{
+			a.classList.add("lessWhite");
+		}
 		box.appendChild(a);
 
 		var b = document.createElement("p");
