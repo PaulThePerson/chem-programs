@@ -23,10 +23,16 @@ function formulaRatio(equation) {
 	var molec = [];
 	var weight = [];
 	var ratio = [];
-	var totalBS = "+";
-	var signOrder=[];
+	var signOrder=[0];
+	var totalBS=0;
 	equation.match(/[\+\=]/g).forEach(function(sign){
-		totalBS+=sign;
+		if (sign==="+"&&totalBS===0){
+			signOrder.push(0);
+		}
+		else{
+			signOrder.push(1);
+			totalBS=1;
+		}
 	});
 	console.log(totalBS)
 	try {
@@ -41,7 +47,7 @@ function formulaRatio(equation) {
 	} catch (TypeError) {
 		console.log("TypeError");
 	}
-	return [molec,weight,ratio];
+	return [molec,weight,ratio,signOrder];
 }
 
 function solveRatio(ratio, known, knownIn){
@@ -54,6 +60,7 @@ function solveRatio(ratio, known, knownIn){
 }
 
 function makeTable(matrix){
+	console.log(matrix);
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
 		thing.removeChild(thing.lastChild);
