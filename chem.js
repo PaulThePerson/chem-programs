@@ -25,7 +25,7 @@ function formulaRatio(equation) {
 	var ratio = [];
 	var totalBS = "+";
 	var signOrder=[];
-	var equation.match(/[\+\=]/).forEach(function(sign){
+	equation.match(/[\+\=]/g).forEach(function(sign){
 		totalBS+=sign;
 	});
 	console.log(totalBS)
