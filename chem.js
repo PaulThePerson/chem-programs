@@ -23,6 +23,12 @@ function formulaRatio(equation) {
 	var molec = [];
 	var weight = [];
 	var ratio = [];
+	var totalBS = "+";
+	var signOrder=[];
+	var equation.match(/[\+\=]/).forEach(function(sign){
+		totalBS+=sign;
+	});
+	console.log(totalBS)
 	try {
 		equation.match(/[^+=]+/g).forEach( function(molecule) {
 			molec.push(molecule);
