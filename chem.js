@@ -44,23 +44,22 @@ function formulaRatio(equation) {
 			}
 			ratio.push((parseInt(molecule.match(/^[\d]*/)))*molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
 		});
+		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("=")];
 	} catch (TypeError) {
 		console.log("TypeError");
 	}
-	return [molec,weight,ratio,signOrder];
 }
 
-function solveRatio(ratio, known, knownIn){
-	ratioNew=[];
-	var x=known/ratio[knownIn];
-	for (var i=0; i<ratio.length; i++){
+function solveRatio(ratio, known, knownIn) {
+	var ratioNew = [];
+	var x = known / ratio[knownIn];
+	for (var i = 0; i < ratio.length; i++) {
 		ratioNew.push(ratio[i]*x);
 	}
 	return ratioNew;
 }
 
-function makeTable(matrix){
-	console.log(matrix);
+function makeTable(matrix) {
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
 		thing.removeChild(thing.lastChild);
@@ -90,6 +89,18 @@ function makeTable(matrix){
 		box.appendChild(d);
 
 		thing.appendChild(box);
+		
+		if (i < matrix[0].length - 1) {
+			box = document.createElement("div");
+
+			var e = document.createElement("p");
+			e.innerHTML = i === matrix[3] ? "\\(=\\)" : "\\(+\\)";
+			e.classList.add("white");
+			e.classList.add("sign");
+			box.appendChild(e);
+
+			thing.appendChild(box);
+		}
 	}
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
 }
