@@ -44,7 +44,7 @@ function formulaRatio(equation) {
 			}
 			ratio.push((parseInt(molecule.match(/^[\d]*/)))*molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
 		});
-		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("=")];
+		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("="),signOrder];
 	} catch (TypeError) {
 		console.log("TypeError");
 	}
@@ -60,7 +60,11 @@ function solveRatio(ratio, known, knownIn) {
 }
 
 function Tester(num){
-	console.log(num);
+	var matrix=formulaRatio(last);
+	//console.log(matrix);
+	known=document.getElementById("cInp"+String(num)).value;
+	console.log(solveRatio(matrix[2],known,num));
+	//solveRatio(matrix[2],known,num).forEach
 }
 
 function makeTable(matrix) {
@@ -73,7 +77,7 @@ function makeTable(matrix) {
 
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
-		if(matrix[3][i]===0){
+		if(matrix[4][i]===0){
 			a.classList.add("white");
 	  }
 		else{
@@ -94,10 +98,10 @@ function makeTable(matrix) {
 		d.setAttribute("id", "cInp"+String(i));
 		box.appendChild(d);
 
-		var e = document.createElement("p");
-		e.setAttribute("id","cOup"+String(i));
-		e.innerHTML = "NULL";
-		box.appendChild(e);
+		var f = document.createElement("p");
+		f.setAttribute("id","cOup"+String(i));
+		f.innerHTML = "NULL";
+		box.appendChild(f);
 
 		thing.appendChild(box);
 
