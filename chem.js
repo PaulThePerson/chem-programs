@@ -64,7 +64,12 @@ function Tester(num){
 	//console.log(matrix);
 	known=document.getElementById("cInp"+String(num)).value;
 	console.log(solveRatio(matrix[2],known,num));
-	//solveRatio(matrix[2],known,num).forEach
+	var i = 0;
+	solveRatio(matrix[2],known,num).forEach(function(weight){
+		a=document.getElementById("cOup"+String(i))
+		a.innerHTML=weight;
+		i++;
+	});
 }
 
 function makeTable(matrix) {
