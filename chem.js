@@ -66,8 +66,9 @@ function Tester(num){
 	console.log(solveRatio(matrix[2],known,num));
 	var i = 0;
 	solveRatio(matrix[2],known,num).forEach(function(weight){
-		a=document.getElementById("cOup"+String(i))
-		a.innerHTML=weight;
+		a=document.getElementById("cOup"+String(i));
+		a.innerHTML=parseInt(weight*1000)/1000;
+		//console.log(parseInt(weight*1000)/1000);
 		i++;
 	});
 }
@@ -91,11 +92,11 @@ function makeTable(matrix) {
 		box.appendChild(a);
 
 		var b = document.createElement("p");
-		b.innerHTML = matrix[1][i];
+		b.innerHTML = parseInt(matrix[1][i]*1000)/1000;
 		box.appendChild(b);
 
 		var c = document.createElement("p");
-		c.innerHTML = matrix[2][i];
+		c.innerHTML = parseInt(matrix[2][i]*1000)/1000;
 		box.appendChild(c);
 
 		var d = document.createElement("input");
