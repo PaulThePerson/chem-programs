@@ -59,6 +59,10 @@ function solveRatio(ratio, known, knownIn) {
 	return ratioNew;
 }
 
+function Tester(num){
+	console.log(num);
+}
+
 function makeTable(matrix) {
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
@@ -86,10 +90,17 @@ function makeTable(matrix) {
 		box.appendChild(c);
 
 		var d = document.createElement("input");
+		d.setAttribute("onKeyUp", "Tester("+String(i)+")");
+		d.setAttribute("id", "cInp"+String(i));
 		box.appendChild(d);
 
+		var e = document.createElement("p");
+		e.setAttribute("id","cOup"+String(i));
+		e.innerHTML = "NULL";
+		box.appendChild(e);
+
 		thing.appendChild(box);
-		
+
 		if (i < matrix[0].length - 1) {
 			box = document.createElement("div");
 
