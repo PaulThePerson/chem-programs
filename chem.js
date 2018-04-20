@@ -3,6 +3,7 @@ var weights = [1.008,4.002,6.941,9.012,10.814,12.011,14.007,15.999,18.998,20.179
 var regex1 = /[A-Z][^A-Z]*/g;
 var last = "CH4+2O2=CO2+2H2O";
 var boxValues=[];
+var fishes=["cod","salmon"]
 
 function molecularWeight(molecule) {
 	var tWeight = 0;
@@ -59,7 +60,7 @@ function solveRatio(ratio, known, knownIn) {
 	return ratioNew;
 }
 
-function Tester(num){
+function Tester(num,ber){
 	var matrix=formulaRatio(last);
 	//console.log(matrix);
 	known=document.getElementById("cInp"+String(num)).value;
@@ -74,14 +75,18 @@ function Tester(num){
 }
 
 function limitingReagent(matrix,weights,places){
+	m=(weights[1]*matrix[2][places[0]]/matrix[2][places[1]]);
+	n=(weights[0]*matrix[2][places[1]]/matrix[2][places[0]]);
+	console.log(m,n);
 	if((matrix[2][places[0]]/weights[0])/(matrix[2][places[1]]/weights[1])>0.9&&(matrix[2][places[0]]/weights[0])/(matrix[2][places[1]]/weights[1])<1.1){
 		return "balanced to a reasonable amount";
 	}
-	if(matrix[places[0]]/weights[0]>matrix[places[1]]/weights[1]){
-		return "reactant "+matrix[0][places[0]]+" is the limiting reagent. You need "+solveRatio(matrix[2],weights[1],places[1])[places[0]];
+	if(matrix[2][places[0]]/weights[0]>matrix[2][places[1]]/weights[1]){
+		return "reactant "+matrix[0][places[0]]+" is the LLimiting reagent. You need "+m;
 	}
 	else{
-		return "reactant "+matrix[0][places[1]]+" is the limiting reagent. You need "+solveRatio(matrix[2],weights[0],places[0])[places[1]];
+		console.log(fishes);
+		return "reactant "+matrix[0][places[1]]+" is the Limiting reagent. You need "+n;
 	}
 }
 
@@ -108,12 +113,11 @@ function makeTable(matrix) {
 		box.appendChild(b);
 
 		var c = document.createElement("p");
-		c.innerHTML = parseInt(matrix[2][i]*1000\
-			000;
+		c.innerHTML = parseInt(matrix[2][i]*1000)/1000;
 		box.appendChild(c);
 
 		var d = document.createElement("input");
-		d.setAttribute("onKeyUp", "Tester("+String(i)+")");
+		d.setAttribute("onKeyUp", "Tester("+String(i)+","+String(matrix[0].length)+")");
 		d.setAttribute("id", "cInp"+String(i));
 		box.appendChild(d);
 
