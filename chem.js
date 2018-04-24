@@ -76,6 +76,16 @@ function limitingReagent(matrix,weights,places){
 	}
 }
 
+function reaKtant(matrix,weights,places){
+	var K=(matrix[2][places[0]]/matrix[2][places[1]])/(weights[0]/weights[1]);
+	if (K>1){
+		return "Check your numbers and try again!";
+	}
+	else{
+		return "The reactant efficiancy "+String(parseInt(K*100000)/1000)+"%";
+	}
+}
+
 function Tester(num,ber){
 	var matrix=formulaRatio(last);
 	var activeP=0;
@@ -104,7 +114,7 @@ function Tester(num,ber){
 		document.getElementById("FOut").innerHTML=limitingReagent(matrix,values,places);
 	}
 	else if (storage==="01"){
-
+		document.getElementById("FOut").innerHTML=reaKtant(matrix,values,places);
 	}
 	else{
 		document.getElementById("FOut").innerHTML="nothing to see here";
