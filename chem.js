@@ -35,7 +35,7 @@ function formulaRatio(equation) {
 			totalBS=1;
 		}
 	});
-	console.log(totalBS)
+	//console.log(totalBS)
 	try {
 		equation.match(/[^+=]+/g).forEach( function(molecule) {
 			molec.push(molecule);
@@ -60,20 +60,6 @@ function solveRatio(ratio, known, knownIn) {
 	return ratioNew;
 }
 
-function Tester(num,ber){
-	var matrix=formulaRatio(last);
-	//console.log(matrix);
-	known=document.getElementById("cInp"+String(num)).value;
-	console.log(solveRatio(matrix[2],known,num));
-	var i = 0;
-	solveRatio(matrix[2],known,num).forEach(function(weight){
-		a=document.getElementById("cOup"+String(i));
-		a.innerHTML=parseInt(weight*1000)/1000;
-		//console.log(parseInt(weight*1000)/1000);
-		i++;
-	});
-}
-
 function limitingReagent(matrix,weights,places){
 	m=(weights[1]*matrix[2][places[0]]/matrix[2][places[1]]);
 	n=(weights[0]*matrix[2][places[1]]/matrix[2][places[0]]);
@@ -85,9 +71,45 @@ function limitingReagent(matrix,weights,places){
 		return "reactant "+matrix[0][places[0]]+" is the LLimiting reagent. You need "+m;
 	}
 	else{
-		console.log(fishes);
+		//console.log(fishes);
 		return "reactant "+matrix[0][places[1]]+" is the Limiting reagent. You need "+n;
 	}
+}
+
+function Tester(num,ber){
+	var matrix=formulaRatio(last);
+	var activeP=0;
+	var activeR=0;
+	var storage="";
+	var values=[];
+	var places=[];
+	//console.log(matrix);
+	known=document.getElementById("cInp"+String(num)).value;
+	console.log(solveRatio(matrix[2],known,num));
+	var i = 0;
+	solveRatio(matrix[2],known,num).forEach(function(weight){
+		a=document.getElementById("cOup"+String(i));
+		a.innerHTML=parseInt(weight*1000)/1000;
+		//console.log(parseInt(weight*1000)/1000);
+		i++;
+	});
+	for (var j=0; j<ber; j++){
+		if (document.getElementById("cInp"+String(j)).value!=""){
+			storage+=String(matrix[4][j]);
+			values.push(document.getElementById("cInp"+String(j)).value);
+			places.push(j);
+		}
+	}
+	if (storage==="00"){
+		document.getElementById("FOut").innerHTML=limitingReagent(matrix,values,places);
+	}
+	else if (storage==="01"){
+
+	}
+	else{
+		document.getElementById("FOut").innerHTML="nothing to see here";
+	}
+	console.log(storage,values)
 }
 
 function makeTable(matrix) {
