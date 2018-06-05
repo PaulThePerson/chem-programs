@@ -7,7 +7,7 @@ var last = "CH4+2O2=CO2+2H2O";
 function molecularWeight(molecule) {
 	var tWeight = 0;
 	try {
-		molecule.match(regex1).forEach( function(mPart) {
+		molecule.match(regex1).forEach(function(mPart) {
 			if (!(/\d+$/.test(mPart))) {
 				mPart += "1";
 			}
@@ -23,28 +23,27 @@ function formulaRatio(equation) {
 	var molec = [];
 	var weight = [];
 	var ratio = [];
-	var signOrder=[0];
-	var totalBS=0;
-	equation.match(/[\+\=]/g).forEach(function(sign){
-		if (sign==="+"&&totalBS===0){
+	var signOrder = [0];
+	var totalBS = 0;
+	equation.match(/[\+\=]/g).forEach(function(sign) {
+		if (sign === "+" && totalBS === 0) {
 			signOrder.push(0);
-		}
-		else{
+        } else {
 			signOrder.push(1);
-			totalBS=1;
+			totalBS = 1;
 		}
 	});
 	//console.log(totalBS)
 	try {
-		equation.match(/[^+=]+/g).forEach( function(molecule) {
+		equation.match(/[^+=]+/g).forEach(function(molecule) {
 			molec.push(molecule);
 			weight.push(molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
-			if(!(/^[\d]/.test(molecule))){
+			if(!(/^[\d]/.test(molecule))) {
 				molecule = "1" + molecule;
 			}
-			ratio.push((parseInt(molecule.match(/^[\d]*/)))*molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
+			ratio.push((parseInt(molecule.match(/^[\d]*/))) * molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
 		});
-		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("="),signOrder];
+		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("="), signOrder];
 	} catch (TypeError) {
 		console.log("TypeError");
 	}
@@ -54,7 +53,7 @@ function solveRatio(ratio, known, knownIn) {
 	var ratioNew = [];
 	var x = known / ratio[knownIn];
 	for (var i = 0; i < ratio.length; i++) {
-		ratioNew.push(ratio[i]*x);
+		ratioNew.push(ratio[i] * x);
 	}
 	return ratioNew;
 }
@@ -63,10 +62,10 @@ function limitingReagent(matrix,weights,places){
 	var m = (weights[1] * matrix[2][places[0]] / matrix[2][places[1]]);
 	var n = (weights[0] * matrix[2][places[1]] / matrix[2][places[0]]);
 	console.log(m, n);
-	if((matrix[2][places[0]] / weights[0]) / (matrix[2][places[1]] / weights[1]) > 0.9 && (matrix[2][places[0]] / weights[0]) / (matrix[2][places[1]] / weights[1]) < 1.1) {
+	if ((matrix[2][places[0]] / weights[0]) / (matrix[2][places[1]] / weights[1]) > 0.9 && (matrix[2][places[0]] / weights[0]) / (matrix[2][places[1]] / weights[1]) < 1.1) {
 		return "balanced to a reasonable amount";
 	}
-	if(matrix[2][places[0]] / weights[0] > matrix[2][places[1]] / weights[1]) {
+	if (matrix[2][places[0]] / weights[0] > matrix[2][places[1]] / weights[1]) {
 		return "reactant " + matrix[0][places[0]] + " is the LLimiting reagent. You need " + m;
 	} else {
 		return "reactant " + matrix[0][places[1]] + " is the Limiting reagent. You need " + n;
@@ -81,43 +80,41 @@ function reaKtant(matrix,weights,places){
 		return "The reactant efficiancy " + String(parseInt(K * 100000) / 1000) + "%";
 	}
 }
-/**
+
 function Tester(num, ber) {
-	var matrix=formulaRatio(last);
-	var activeP=0;
-	var activeR=0;
-	var storage="";
-	var values=[];
-	var places=[];
+	var matrix = formulaRatio(last);
+	//var activeP = 0;
+	//var activeR = 0;
+	var storage = "";
+	var values = [];
+	var places = [];
 	//console.log(matrix);
-	known=document.getElementById("cInp"+String(num)).value;
-	console.log(solveRatio(matrix[2],known,num));
+	var known = document.getElementById("cInp" + String(num)).value;
+	console.log(solveRatio(matrix[2], known, num));
 	var i = 0;
-	solveRatio(matrix[2],known,num).forEach(function(weight){
-		a=document.getElementById("cOup"+String(i));
-		a.innerHTML=parseInt(weight*1000)/1000;
+	solveRatio(matrix[2], known, num).forEach(function(weight) {
+		var a = document.getElementById("cOup" + String(i));
+		a.innerHTML = parseInt(weight * 1000) / 1000;
 		//console.log(parseInt(weight*1000)/1000);
 		i++;
 	});
-	for (var j=0; j<ber; j++){
-		if (document.getElementById("cInp"+String(j)).value!=""){
-			storage+=String(matrix[4][j]);
-			values.push(document.getElementById("cInp"+String(j)).value);
+	for (var j = 0; j < ber; j++) {
+		if (document.getElementById("cInp" + String(j)).value !== "") {
+			storage += String(matrix[4][j]);
+			values.push(document.getElementById("cInp" + String(j)).value);
 			places.push(j);
 		}
 	}
-	if (storage==="00"){
-		document.getElementById("FOut").innerHTML=limitingReagent(matrix,values,places);
+	if (storage === "00") {
+		document.getElementById("FOut").innerHTML = limitingReagent(matrix, values, places);
+	} else if (storage === "01") {
+		document.getElementById("FOut").innerHTML = reaKtant(matrix,values,places);
+	} else {
+		document.getElementById("FOut").innerHTML = "nothing to see here";
 	}
-	else if (storage==="01"){
-		document.getElementById("FOut").innerHTML=reaKtant(matrix,values,places);
-	}
-	else{
-		document.getElementById("FOut").innerHTML="nothing to see here";
-	}
-	console.log(storage,values)
+	console.log(storage, values);
 }
-*/
+
 function makeTable(matrix) {
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
@@ -128,10 +125,9 @@ function makeTable(matrix) {
 
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
-		if(matrix[4][i]===0){
+		if(matrix[4][i] === 0) {
 			a.classList.add("white");
-	  }
-		else{
+        } else {
 			a.classList.add("lessWhite");
 		}
 		box.appendChild(a);
