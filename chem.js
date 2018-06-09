@@ -122,6 +122,15 @@ function Tester(num,ber){
 	console.log(storage,values)
 }
 
+function balEQ(equation){
+	terms=[];
+	equation.match(/[^+=]+/g).forEach(function(bithing){
+		console.log(bithing);
+		terms.push(bithing.match(/(\d)*([^=+]+)/g));
+	});
+	return terms;
+}
+
 function makeTable(matrix) {
 	var thing = document.getElementById("box");
 	while (thing.children.length > 1) {
