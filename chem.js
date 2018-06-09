@@ -181,7 +181,7 @@ function makeTable(matrix) {
 makeTable(formulaRatio(last));
 
 function invertMatrix(M){
-  //I didnt make this code. I tried. I failed. SO... you get this code
+  //I didnt make this function. I tried. I failed. SO... you get this code
   //enjoy.
   //maybe I can try to make my own later.
   // source at http://blog.acipo.com/matrix-inversion-in-javascript/
@@ -307,7 +307,10 @@ function balEq(equation){
     answer="";
     for(var i=0;i<ratio.length;i++){
       ratio[i]=ratio[i]*multiplier;
-      answer+=Math.abs(ratio[i])+molcs[i];
+      if(Math.abs(ratio[i])!==1){
+				answer+=Math.abs(ratio[i]);
+			}
+			answer+=molcs[i];
       if(ratio.length-1>i){
         if(ratio[i+1]*ratio[i]>0){
           answer+="+";
