@@ -3,6 +3,7 @@ var weights = [1.008,4.002,6.941,9.012,10.814,12.011,14.007,15.999,18.998,20.179
 
 var regex1 = /[A-Z][^A-Z]*/g;
 var last = "CH4+2O2=CO2+2H2O";
+var fishes = ["cod","salmon"]
 
 function molecularWeight(molecule) {
 	var tWeight = 0;
@@ -241,7 +242,7 @@ function fixReturn(thing){
   return sum;
 }
 
-function mEquation(equation){
+function balEq(equation){
   try{
     var elems=[];
     var molcs=equation.match(/[A-Z][^+=]*/gm);
@@ -318,6 +319,7 @@ function thing() {
 	var value = document.getElementById("in").value;
 	if (value !== last) {
 		last = value;
-		makeTable(formulaRatio(document.getElementById("in").value));
+		if(balEq(document.getElementById("in").value;)[1]===1){}
+		makeTable(formulaRatio(balEq(document.getElementById("in").value)[0]));
 	}
 }
