@@ -319,7 +319,7 @@ function thing() {
 	var value = document.getElementById("in").value;
 	if (value !== last) {
 		last = value;
-		if(balEq(document.getElementById("in").value;)[1]===1){}
+		//if(balEq(document.getElementById("in").value;)[1]===1){}
 		makeTable(formulaRatio(balEq(document.getElementById("in").value)[0]));
 	}
 }
