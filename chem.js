@@ -319,7 +319,13 @@ function thing() {
 	var value = document.getElementById("in").value;
 	if (value !== last) {
 		last = value;
-		//if(balEq(document.getElementById("in").value;)[1]===1){}
-		makeTable(formulaRatio(balEq(document.getElementById("in").value)[0]));
+		var aff=balEq(document.getElementById("in").value);
+		makeTable(formulaRatio(aff[0]));
+		if(aff[1]===0){
+			document.getElementById("warning").style.color="white";
+		}
+		else{
+			document.getElementById("warning").style.color="black";
+		}
 	}
 }
