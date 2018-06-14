@@ -243,92 +243,145 @@ function fixReturn(thing) {
         return 0;
     }
     thing.forEach(function(thing2) {
-        console.log(thing2, thing);
+        //console.log(thing2, thing);
         if (thing2 === "") {
             sum+=1;
         } else {
             sum+=parseInt(thing2);
         }
     });
+		//console.log(sum);
     return sum;
 }
 
-function balEq(equation) {
-    try {
-        var elems = [];
-        var molcs = equation.match(/[A-Z][^+=]*/gm);
-        equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule) {
-            console.log(molecule);
-            molecule.match(/[A-Z][a-z]?/gm).forEach(function(element) {
-                if (elems.indexOf(element) < 0) {
-                    elems.push(element);
-                }
-            });
+function checkBal(equation){
+	var elems = [];
+	var molcs = equation.match(/[A-Z][^+=]*/gm);
+	var molcs2=equation.match(/[^+=]+/gm);
+	equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule) {
+			console.log(molecule);
+			molecule.match(/[A-Z][a-z]?/gm).forEach(function(element) {
+					if (elems.indexOf(element) < 0) {
+							elems.push(element);
+					}
+			});
+	});
+	//console.log(elems, molcs);
+	var matrixP = [];
+	elems.forEach(function(element) {
+			matrixP.push([]);
+			molcs.forEach(function(molecule) {
+					//console.log("molecule = " + molecule + ", tested element = " + element);
+					//console.log("match = " + molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm")));
+					matrixP[matrixP.length - 1].push(fixReturn(molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm"))));
+			});
+	});
+	var eqdist= equation.match(/[+=]/gm).indexOf("=")+1;
+	console.log(eqdist);
+	var bad=0
+	matrixP.forEach(function(element){
+		var x=element;
+		var y=x.splice(eqdist);
+		var xSum=0;
+		var ySum=0;
+		var i=0;
+		x.forEach(function(num){
+			xSum+=num*fixReturn(molcs2[i].match(/^[\d]*/));
+			//console.log(fixReturn(molcs[i].match(/^[\d]*/)));
+			i++;
+		});
+		y.forEach(function(num){
+			ySum+=num*fixReturn(molcs2[i].match(/^[\d]*/));
+			i++;
+			//console.log(fixReturn(molcs[i].match(/^[\d]*/)));
+		});
+		//console.log(x,y,xSum,ySum);
+		console.log(xSum,ySum,x,y);
+		console.log(molcs2);
+		if(xSum!==ySum){
+			console.log("mrrp");
+			bad=1;
+		}
+	});
+	return bad;
+}
+
+function balEq(equation){
+  try {
+    var elems = [];
+    var molcs = equation.match(/[A-Z][^+=]*/gm);
+    equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule) {
+        console.log(molecule);
+        molecule.match(/[A-Z][a-z]?/gm).forEach(function(element) {
+            if (elems.indexOf(element) < 0) {
+                elems.push(element);
+            }
         });
-        console.log(elems, molcs);
-        var matrixP = [];
-        elems.forEach(function(element) {
-            matrixP.push([]);
-            molcs.forEach(function(molecule) {
-                console.log("molecule = " + molecule + ", tested element = " + element);
-                console.log("match = " + molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm")));
-                matrixP[matrixP.length - 1].push(fixReturn(molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm"))));
-            });
+    });
+    console.log(elems, molcs);
+    var matrixP = [];
+    elems.forEach(function(element) {
+        matrixP.push([]);
+        molcs.forEach(function(molecule) {
+            console.log("molecule = " + molecule + ", tested element = " + element);
+            console.log("match = " + molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm")));
+            matrixP[matrixP.length - 1].push(fixReturn(molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm"))));
         });
-        console.log(matrixP);
-        while(matrixP[0].length>matrixP.length) {
-            matrixP.push([]);
-            for (var i = 0; i < matrixP[0].length; i++) {
-                if (i === matrixP.length - 1) {
-                    matrixP[matrixP.length - 1].push(1);
-                } else {
-                    matrixP[matrixP.length - 1].push(0);
-                }
+    });
+    console.log(matrixP);
+    while(matrixP[0].length>matrixP.length) {
+        matrixP.push([]);
+        for (var i = 0; i < matrixP[0].length; i++) {
+            if (i === matrixP.length - 1) {
+                matrixP[matrixP.length - 1].push(1);
+            } else {
+                matrixP[matrixP.length - 1].push(0);
             }
         }
-        var ratio = [];
-        var matrix = invertMatrix(matrixP);
-        for (var k = 0; k < matrix.length; k++) {
-            ratio.push(matrix[k][matrix.length - 1]);
-        }
-        console.log(ratio);
-        var quitValue = 3000;
-        var multiplier = 0;
-        while (quitValue !== 0) {
-            multiplier++;
-            quitValue++;
-            var bad = 0;
-            ratio.forEach(function(numb) {
-                if (!(Math.round(numb * 1000 * multiplier) % 1000 === 0)) {
-                    bad = 1;
-                }
-            });
-            if (bad === 0) {
-                break;
-            }
-        }
-        console.log(multiplier);
-        var answer = "";
-        for (var l = 0; l < ratio.length; l++) {
-            ratio[l] = ratio[l] * multiplier;
-            if (Math.abs(ratio[l]) !== 1) {
-                answer += Math.abs(ratio[l]);
-            }
-            answer += molcs[l];
-            if (ratio.length - 1 > l) {
-                if (ratio[l + 1] * ratio[l] > 0) {
-                    answer += "+";
-                } else {
-                    answer += "=";
-                }
-            }
-        }
-        console.log(answer);
-        return [answer, 0];
     }
-    catch (TypeError) {
-        return [equation , 1];
+    var ratio = [];
+    var matrix = invertMatrix(matrixP);
+    for (var k = 0; k < matrix.length; k++) {
+        ratio.push(matrix[k][matrix.length - 1]);
     }
+    console.log(ratio);
+    var quitValue = 3000;
+    var multiplier = 0;
+    while (quitValue !== 0) {
+        multiplier++;
+        quitValue++;
+        var bad = 0;
+        ratio.forEach(function(numb) {
+            if (!(Math.round(numb * 1000 * multiplier) % 1000 === 0)) {
+                bad = 1;
+            }
+        });
+        if (bad === 0) {
+            break;
+        }
+    }
+    console.log(multiplier);
+    var answer = "";
+    for (var l = 0; l < ratio.length; l++) {
+        ratio[l] = ratio[l] * multiplier;
+        if (Math.abs(ratio[l]) !== 1) {
+            answer += Math.abs(ratio[l]);
+        }
+        answer += molcs[l];
+        if (ratio.length - 1 > l) {
+            if (ratio[l + 1] * ratio[l] > 0) {
+                answer += "+";
+            } else {
+                answer += "=";
+            }
+        }
+    }
+    console.log(answer);
+    return [answer, 0];
+  }
+  catch (TypeError) {
+    return [equation , 1];
+  }
 }
 
 var init = true;
@@ -351,9 +404,11 @@ function thing() {
     }
     makeTable(result);
     if (aff[1] === 0) {
-        document.getElementById("warning").innerHTML = "";
+        document.getElementById("warning").innerHTML = "Balancing Successful";
+				document.getElementById("warning").style.color="black";
     } else {
         document.getElementById("warning").innerHTML = "Equation could not be balanced.";
+				document.getElementById("warning").style.color="red"
     }
 	}
 }
