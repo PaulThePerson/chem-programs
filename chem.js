@@ -113,9 +113,7 @@ function Tester(num, ber) {
 	}
 	console.log(storage, values);
 	if(places.length===1){
-		console.log(matrix);
 		solveRatio(matrix[2], document.getElementById("cInp"+places[0]).value, places[0]).forEach(function(weight) {
-			console.log(weight);
 			var a = document.getElementById("cOup" + String(i));
 			a.innerHTML = parseInt(weight * 1000) / 1000;
 			i++;
@@ -259,12 +257,12 @@ function balEq(equation){
     var elems=[];
     var molcs=equation.match(/[A-Z][^+=]*/gm);
     equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule){
-      //console.log(molecule);
+      console.log(molecule);
       molecule.match(/[A-Z][a-z]?/gm).forEach(function(element){
         if(elems.indexOf(element)<0){
           elems.push(element);
     }})})
-    //console.log(elems,molcs);
+    console.log(elems,molcs);
     var matrixP=[];
     elems.forEach(function(element){
       matrixP.push([]);
@@ -274,7 +272,7 @@ function balEq(equation){
         matrixP[matrixP.length-1].push(fixReturn(molecule.match(new RegExp("(?<="+element+")[0-9]*","gm"))));
       })
     })
-    //console.log(matrixP);
+    console.log(matrixP);
     while(matrixP[0].length>matrixP.length){
       matrixP.push([]);
       for(var i=0; i<matrixP[0].length; i++){
@@ -291,7 +289,7 @@ function balEq(equation){
     for(var i=0;i<matrix.length;i++){
       ratio.push(matrix[i][matrix.length-1]);
     }
-    //console.log(ratio);
+    console.log(ratio);
     var quitValue=3000;
     var multiplier=0;
     while(quitValue!==0){
@@ -305,7 +303,7 @@ function balEq(equation){
       })
       if(bad===0){break;}
     }
-    //console.log(multiplier);
+    console.log(multiplier);
     answer="";
     for(var i=0;i<ratio.length;i++){
       ratio[i]=ratio[i]*multiplier;
@@ -322,7 +320,7 @@ function balEq(equation){
         }
       }
     }
-    //console.log(answer);
+    console.log(answer);
     return [answer,0];
   }
   catch(TypeError){
@@ -336,17 +334,11 @@ function thing() {
 		last = value;
 		var aff=balEq(document.getElementById("in").value);
 		makeTable(formulaRatio(aff[0]));
-		last = aff[0];
-		console.log(aff);
-		console.log(last);
-		console.log(value);
 		if(aff[1]===0){
-			document.getElementById("warning").innerHTML="Equation Successfuly Balanced";
-			document.getElementById("warning").style.color="black";
+			document.getElementById("warning").style.color="white";
 		}
-		else if(aff[1]===1){
-			document.getElementById("warning").innerHTML="Equation Balancing Failed";
-			document.getElementById("warning").style.color="red";
+		else{
+			document.getElementById("warning").style.color="black";
 		}
 	}
 }
