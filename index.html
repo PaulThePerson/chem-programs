@@ -9,8 +9,10 @@
 	</head>
 
 	<body>
-		<input id="in" onKeyUp="thing()">
-
+		<span id="topThingy">
+			<div><input id="in" onKeyUp="thing()"></div>
+			<div id="warningS"><p id="warning">Equation couldn't be ballanced.</p></div>
+		</span>
 		<div id="box">
 			<div>
 				<p>Molecule</p>
@@ -20,7 +22,7 @@
 				<p>Output</p>
 			</div>
 		</div>
-		<p id="FOut"></p>
+		<h2 id="FOut"></h2>
 		<script src="chem.js"></script>
 	</body>
 
