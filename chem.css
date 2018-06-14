@@ -25,3 +25,14 @@ input,
 .sign {
 	border: none !important;
 }
+#topThingy {
+	display: flex;
+	flex-wrap: wrap;
+}
+#topThingy div {
+	display: flex;
+	flex-direction: column;
+}
+#warning{
+	color:red
+}

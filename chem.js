@@ -89,16 +89,14 @@ function Tester(num, ber) {
 	var storage = "";
 	var values = [];
 	var places = [];
-	//console.log(matrix);
 	var known = document.getElementById("cInp" + String(num)).value;
 	console.log(solveRatio(matrix[2], known, num));
 	var i = 0;
-	solveRatio(matrix[2], known, num).forEach(function(weight) {
+	/*solveRatio(matrix[2], known, num).forEach(function(weight) {
 		var a = document.getElementById("cOup" + String(i));
 		a.innerHTML = parseInt(weight * 1000) / 1000;
-		//console.log(parseInt(weight*1000)/1000);
 		i++;
-	});
+	});*/
 	for (var j = 0; j < ber; j++) {
 		if (document.getElementById("cInp" + String(j)).value !== "") {
 			storage += String(matrix[4][j]);
@@ -114,6 +112,18 @@ function Tester(num, ber) {
 		document.getElementById("FOut").innerHTML = "nothing to see here";
 	}
 	console.log(storage, values);
+	if(places.length===1){
+		solveRatio(matrix[2], document.getElementById("cInp"+places[0]).value, places[0]).forEach(function(weight) {
+			var a = document.getElementById("cOup" + String(i));
+			a.innerHTML = parseInt(weight * 1000) / 1000;
+			i++;
+		});
+	}
+	else{
+		for(var j=0; j<matrix[2].length; j++){
+			document.getElementById("cOup" + String(j)).innerHTML ="NULL"
+		}
+	}
 }
 
 function makeTable(matrix) {
@@ -171,7 +181,7 @@ function makeTable(matrix) {
 makeTable(formulaRatio(last));
 
 function invertMatrix(M){
-  //I didnt make this code. I tried. I failed. SO... you get this code
+  //I didnt make this function. I tried. I failed. SO... you get this code
   //enjoy.
   //maybe I can try to make my own later.
   // source at http://blog.acipo.com/matrix-inversion-in-javascript/
@@ -297,7 +307,10 @@ function balEq(equation){
     answer="";
     for(var i=0;i<ratio.length;i++){
       ratio[i]=ratio[i]*multiplier;
-      answer+=Math.abs(ratio[i])+molcs[i];
+      if(Math.abs(ratio[i])!==1){
+				answer+=Math.abs(ratio[i]);
+			}
+			answer+=molcs[i];
       if(ratio.length-1>i){
         if(ratio[i+1]*ratio[i]>0){
           answer+="+";
@@ -319,7 +332,13 @@ function thing() {
 	var value = document.getElementById("in").value;
 	if (value !== last) {
 		last = value;
-		//if(balEq(document.getElementById("in").value;)[1]===1){}
-		makeTable(formulaRatio(balEq(document.getElementById("in").value)[0]));
+		var aff=balEq(document.getElementById("in").value);
+		makeTable(formulaRatio(aff[0]));
+		if(aff[1]===0){
+			document.getElementById("warning").style.color="white";
+		}
+		else{
+			document.getElementById("warning").style.color="black";
+		}
 	}
 }
