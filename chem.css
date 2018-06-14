@@ -13,10 +13,14 @@
 input,
 #box p,
 #FOut,
-#warning {
+#warning,
+#instux {
 	font-family: "Open Sans";
 	margin: 10px;
 	padding: 5px;
+}
+li {
+	font-family: "Open Sans";
 }
 .white {
 	color: #fff;
