@@ -6,16 +6,15 @@ var last = "H2O+CO2=C6H12O6+O2";
 
 function molecularWeight(molecule) {
 	var tWeight = 0;
-	try {
-		molecule.match(regex1).forEach(function(mPart) {
-			if (!(/\d+$/.test(mPart))) {
-				mPart += "1";
-			}
-			tWeight += parseFloat(mPart.match(/\d+$/)) * weights[atoms.indexOf(mPart.match(/[A-Z][a-z]*/)[0])];
-		});
-	} catch (TypeError) {
-		console.log("TypeError");
-	}
+    if (molecule.match(regex1) === null) {
+        return "Invalid";
+    }
+    molecule.match(regex1).forEach(function(mPart) {
+        if (!(/\d+$/.test(mPart))) {
+            mPart += "1";
+        }
+        tWeight += parseFloat(mPart.match(/\d+$/)) * weights[atoms.indexOf(mPart.match(/[A-Z][a-z]*/)[0])];
+    });
 	return tWeight;
 }
 
@@ -25,6 +24,9 @@ function formulaRatio(equation) {
 	var ratio = [];
 	var signOrder = [0];
 	var totalBS = 0;
+    if (equation.match(/[\+\=]/g) === null) {
+        return "Invalid";
+    }
 	equation.match(/[\+\=]/g).forEach(function(sign) {
 		if (sign === "+" && totalBS === 0) {
 			signOrder.push(0);
@@ -33,19 +35,18 @@ function formulaRatio(equation) {
 			totalBS = 1;
 		}
 	});
-	try {
-		equation.match(/[^+=]+/g).forEach(function(molecule) {
-			molec.push(molecule);
-			weight.push(molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
-			if(!(/^[\d]/.test(molecule))) {
-				molecule = "1" + molecule;
-			}
-			ratio.push((parseInt(molecule.match(/^[\d]*/))) * molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
-		});
-		return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("="), signOrder];
-	} catch (TypeError) {
-		console.log("TypeError");
-	}
+    equation.match(/[^+=]+/g).forEach(function(molecule) {
+        molec.push(molecule);
+        if (molecularWeight(molecule.match(/^[\d]*(.*)/)[1]) === "Invalid") {
+            return "Invalid 2";
+        }
+        weight.push(molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
+        if(!(/^[\d]/.test(molecule))) {
+            molecule = "1" + molecule;
+        }
+        ratio.push((parseInt(molecule.match(/^[\d]*/))) * molecularWeight(molecule.match(/^[\d]*(.*)/)[1]));
+    });
+    return [molec, weight, ratio, equation.match(/[+=]/g).indexOf("="), signOrder];
 }
 
 function solveRatio(ratio, known, knownIn) {
@@ -135,11 +136,7 @@ function makeTable(matrix) {
 
 		var a = document.createElement("p");
 		a.innerHTML = '\\(' + matrix[0][i].replace(/\D+/g, '\\text{$&}').replace(/\D(\d+)/g, '}_{$1}') + '\\)';
-		if(matrix[4][i] === 0) {
-			a.classList.add("white");
-        } else {
-			a.classList.add("lessWhite");
-		}
+        a.classList.add("white");
 		box.appendChild(a);
 
 		var b = document.createElement("p");
@@ -343,12 +340,20 @@ function thing() {
         init = false;
 		last = value;
 		var aff = balEq(document.getElementById("in").value);
-		makeTable(formulaRatio(aff[0]));
-		if(aff[1] === 0) {
-			document.getElementById("warning").style.color = "white";
-		} else {
-			document.getElementById("warning").style.color = "black";
-		}
+        var result = formulaRatio(aff[0]);
+        if (result === "Invalid") {
+            document.getElementById("warning").innerHTML = "Please complete the equation.";
+            return;
+        } else if (result === "Invalid 2" || !result) {
+            document.getElementById("warning").innerHTML = "Invalid input.";
+            return;
+        }
+        makeTable(result);
+        if (aff[1] === 0) {
+            document.getElementById("warning").innerHTML = "";
+        } else {
+            document.getElementById("warning").innerHTML = "Equation could not be balanced.";
+        }
 	}
 }
 thing();
