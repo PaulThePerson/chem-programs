@@ -81,7 +81,9 @@ function reaKtant(matrix,weights,places){
 	}
 }
 
-function Tester(num, ber) {
+function Tester(num, ber, aa) {
+    console.log(aa);
+    aa.backgroundColor = '#f00';
 	var matrix = formulaRatio(last);
 	//var activeP = 0;
 	//var activeR = 0;
@@ -110,7 +112,7 @@ function Tester(num, ber) {
 	} else if (storage === "01") {
 		document.getElementById("FOut").innerHTML = reaKtant(matrix,values,places);
 	} else {
-		document.getElementById("FOut").innerHTML = "nothing to see here";
+		document.getElementById("FOut").innerHTML = "Please enter in another value";
 	}
 	console.log(storage, values);
 }
@@ -133,20 +135,20 @@ function makeTable(matrix) {
 		box.appendChild(a);
 
 		var b = document.createElement("p");
-		b.innerHTML = parseInt(matrix[1][i]*1000)/1000;
+		b.innerHTML = parseInt(matrix[1][i] * 1000) / 1000;
 		box.appendChild(b);
 
 		var c = document.createElement("p");
-		c.innerHTML = parseInt(matrix[2][i]*1000)/1000;
+		c.innerHTML = parseInt(matrix[2][i] * 1000) / 1000;
 		box.appendChild(c);
 
 		var d = document.createElement("input");
-		d.setAttribute("onKeyUp", "Tester("+String(i)+","+String(matrix[0].length)+")");
-		d.setAttribute("id", "cInp"+String(i));
+		d.setAttribute("id", "cInp" + String(i));
+		d.setAttribute("onKeyUp", "Tester(" + String(i) + "," + String(matrix[0].length) + "," + String("cInp" + String(i)) + ")");
 		box.appendChild(d);
 
 		var f = document.createElement("p");
-		f.setAttribute("id","cOup"+String(i));
+		f.setAttribute("id","cOup" + String(i));
 		f.innerHTML = "NULL";
 		box.appendChild(f);
 
