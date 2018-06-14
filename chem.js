@@ -341,20 +341,20 @@ function thing() {
 		last = value;
 		var aff = balEq(document.getElementById("in").value);
 		last = aff[0];
-        var result = formulaRatio(aff[0]);
-        if (result === "Invalid") {
-            document.getElementById("warning").innerHTML = "Please complete the equation.";
-            return;
-        } else if (result === "Invalid 2" || !result) {
-            document.getElementById("warning").innerHTML = "Invalid input.";
-            return;
-        }
-        makeTable(result);
-        if (aff[1] === 0) {
-            document.getElementById("warning").innerHTML = "";
-        } else {
-            document.getElementById("warning").innerHTML = "Equation could not be balanced.";
-        }
+    var result = formulaRatio(aff[0]);
+    if (result === "Invalid") {
+        document.getElementById("warning").innerHTML = "Please complete the equation.";
+        return;
+    } else if (result === "Invalid 2" || !result) {
+        document.getElementById("warning").innerHTML = "Invalid input.";
+        return;
+    }
+    makeTable(result);
+    if (aff[1] === 0) {
+        document.getElementById("warning").innerHTML = "";
+    } else {
+        document.getElementById("warning").innerHTML = "Equation could not be balanced.";
+    }
 	}
 }
 thing();
