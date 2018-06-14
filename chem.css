@@ -19,6 +19,9 @@ input,
 	margin: 10px;
 	padding: 5px;
 }
+input {
+    width: calc(100% - 30px);
+}
 li {
 	font-family: "Open Sans";
 }
@@ -33,13 +36,5 @@ li {
 }
 #FOut {
     background-color: #eee;
-    width: calc(100% - 20px);
-}
-#topThingy {
-	display: flex;
-	flex-wrap: wrap;
-}
-#topThingy div {
-	display: flex;
-	flex-direction: column;
+    width: calc(100% - 30px);
 }

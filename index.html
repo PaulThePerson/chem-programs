@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<title>The Chemistry Super Solver</title>
 		<link rel="stylesheet" type="text/css" href="chem.css">
@@ -13,13 +12,9 @@
         <ul>
             <li>Balancing: if possible, the equation will be balanced with coefficients.</li>
             <li>K efficiancy: enter the weight of a reactant and the weight of a product.</li>
-            <li>Limiting reagent:enter the weights of two reactants.</li>
+            <li>Limiting reagent: enter the weights of two reactants.</li>
         </ul>
-		<span id="topThingy">
-			<div>
-                <input id="in" onKeyUp="thing()" value="H2O+CO2=C6H12O6+O2">
-            </div>
-		</span>
+        <input id="in" onKeyUp="thing()" value="H2O+CO2=C6H12O6+O2">
 		<div id="box">
 			<div>
 				<p>Molecule</p>
@@ -33,5 +28,4 @@
 		<p id="FOut"></p>
 		<script src="chem.js"></script>
 	</body>
-
 </html>
