@@ -3,7 +3,6 @@ var weights = [1.008,4.002,6.941,9.012,10.814,12.011,14.007,15.999,18.998,20.179
 
 var regex1 = /[A-Z][^A-Z]*/g;
 var last = "CH4+2O2=CO2+2H2O";
-var fishes = ["cod","salmon"]
 
 function molecularWeight(molecule) {
 	var tWeight = 0;
@@ -34,7 +33,6 @@ function formulaRatio(equation) {
 			totalBS = 1;
 		}
 	});
-	//console.log(totalBS)
 	try {
 		equation.match(/[^+=]+/g).forEach(function(molecule) {
 			molec.push(molecule);
@@ -114,16 +112,15 @@ function Tester(num, ber, aa) {
 		document.getElementById("FOut").innerHTML = "Please enter in another value";
 	}
 	console.log(storage, values);
-	if(places.length===1){
-		solveRatio(matrix[2], document.getElementById("cInp"+places[0]).value, places[0]).forEach(function(weight) {
+	if (places.length === 1) {
+		solveRatio(matrix[2], document.getElementById("cInp" + places[0]).value, places[0]).forEach(function(weight) {
 			var a = document.getElementById("cOup" + String(i));
 			a.innerHTML = parseInt(weight * 1000) / 1000;
 			i++;
 		});
-	}
-	else{
-		for(var j=0; j<matrix[2].length; j++){
-			document.getElementById("cOup" + String(j)).innerHTML ="NULL"
+	} else {
+		for(var k = 0; k < matrix[2].length; k++) {
+			document.getElementById("cOup" + String(k)).innerHTML = "NULL";
 		}
 	}
 }
@@ -190,6 +187,12 @@ function invertMatrix(M){
   //just this function
   //i did the rest
   //just to be clear
+    
+    
+    //AAAAAAAAAAAAAAAAACCCCCCKKKKK
+    //WHAT IS THIS CODE
+    //ITS IN SPACES WHATTTTTTT
+    //ACACACACACACKCKAKCKAKA
   if(M.length !== M[0].length){return;}
   var i=0, ii=0, j=0, dim=M.length, e=0, t=0;
   var I = [], C = [];
@@ -237,110 +240,110 @@ function invertMatrix(M){
     return I;
 }
 
-function fixReturn(thing){
-  var sum=0;
-  if(thing===null){
-    return 0;
-  }
-  thing.forEach(function(thing2){
-    console.log(thing2,thing);
-    if(thing2===""){
-      sum+=1;
+function fixReturn(thing) {
+    var sum = 0;
+    if (thing === null) {
+        return 0;
     }
-    else{
-      sum+=parseInt(thing2);
-    }
-  })
-  return sum;
+    thing.forEach(function(thing2) {
+        console.log(thing2, thing);
+        if (thing2 === "") {
+            sum+=1;
+        } else {
+            sum+=parseInt(thing2);
+        }
+    });
+    return sum;
 }
 
-function balEq(equation){
-  try{
-    var elems=[];
-    var molcs=equation.match(/[A-Z][^+=]*/gm);
-    equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule){
-      console.log(molecule);
-      molecule.match(/[A-Z][a-z]?/gm).forEach(function(element){
-        if(elems.indexOf(element)<0){
-          elems.push(element);
-    }})})
-    console.log(elems,molcs);
-    var matrixP=[];
-    elems.forEach(function(element){
-      matrixP.push([]);
-      molcs.forEach(function(molecule){
-        console.log("molecule = " + molecule+", tested element = "+element);
-        console.log("match = " + molecule.match(new RegExp("(?<="+element+")[0-9]*","gm")));
-        matrixP[matrixP.length-1].push(fixReturn(molecule.match(new RegExp("(?<="+element+")[0-9]*","gm"))));
-      })
-    })
-    console.log(matrixP);
-    while(matrixP[0].length>matrixP.length){
-      matrixP.push([]);
-      for(var i=0; i<matrixP[0].length; i++){
-        if(i===matrixP.length-1){
-          matrixP[matrixP.length-1].push(1);
+function balEq(equation) {
+    try {
+        var elems = [];
+        var molcs = equation.match(/[A-Z][^+=]*/gm);
+        equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule) {
+            console.log(molecule);
+            molecule.match(/[A-Z][a-z]?/gm).forEach(function(element) {
+                if (elems.indexOf(element) < 0) {
+                    elems.push(element);
+                }
+            });
+        });
+        console.log(elems, molcs);
+        var matrixP = [];
+        elems.forEach(function(element) {
+            matrixP.push([]);
+            molcs.forEach(function(molecule) {
+                console.log("molecule = " + molecule + ", tested element = " + element);
+                console.log("match = " + molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm")));
+                matrixP[matrixP.length - 1].push(fixReturn(molecule.match(new RegExp("(?<=" + element + ")[0-9]*","gm"))));
+            });
+        });
+        console.log(matrixP);
+        while(matrixP[0].length>matrixP.length) {
+            matrixP.push([]);
+            for (var i = 0; i < matrixP[0].length; i++) {
+                if (i === matrixP.length - 1) {
+                    matrixP[matrixP.length - 1].push(1);
+                } else {
+                    matrixP[matrixP.length - 1].push(0);
+                }
+            }
         }
-        else{
-          matrixP[matrixP.length-1].push(0);
+        var ratio = [];
+        var matrix = invertMatrix(matrixP);
+        for (var k = 0; k < matrix.length; k++) {
+            ratio.push(matrix[k][matrix.length - 1]);
         }
-      }
+        console.log(ratio);
+        var quitValue = 3000;
+        var multiplier = 0;
+        while (quitValue !== 0) {
+            multiplier++;
+            quitValue++;
+            var bad = 0;
+            ratio.forEach(function(numb) {
+                if (!(Math.round(numb * 1000 * multiplier) % 1000 === 0)) {
+                    bad = 1;
+                }
+            });
+            if (bad === 0) {
+                break;
+            }
+        }
+        console.log(multiplier);
+        var answer = "";
+        for (var l = 0; l < ratio.length; l++) {
+            ratio[l] = ratio[l] * multiplier;
+            if (Math.abs(ratio[l]) !== 1) {
+                answer += Math.abs(ratio[l]);
+            }
+            answer += molcs[l];
+            if (ratio.length - 1 > l) {
+                if (ratio[l + 1] * ratio[l] > 0) {
+                    answer += "+";
+                } else {
+                    answer += "=";
+                }
+            }
+        }
+        console.log(answer);
+        return [answer, 0];
     }
-    var ratio=[];
-    var matrix=invertMatrix(matrixP);
-    for(var i=0;i<matrix.length;i++){
-      ratio.push(matrix[i][matrix.length-1]);
+    catch (TypeError) {
+        return [equation , 1];
     }
-    console.log(ratio);
-    var quitValue=3000;
-    var multiplier=0;
-    while(quitValue!==0){
-      multiplier++;
-      quitValue++;
-      var bad=0;
-      ratio.forEach(function(numb){
-        if(!(Math.round(numb*1000*multiplier)%1000===0)){
-          bad=1;
-        }
-      })
-      if(bad===0){break;}
-    }
-    console.log(multiplier);
-    answer="";
-    for(var i=0;i<ratio.length;i++){
-      ratio[i]=ratio[i]*multiplier;
-      if(Math.abs(ratio[i])!==1){
-				answer+=Math.abs(ratio[i]);
-			}
-			answer+=molcs[i];
-      if(ratio.length-1>i){
-        if(ratio[i+1]*ratio[i]>0){
-          answer+="+";
-        }
-        else{
-          answer+="="
-        }
-      }
-    }
-    console.log(answer);
-    return [answer,0];
-  }
-  catch(TypeError){
-    return [equation,1];
-  }
 }
 
 function thing() {
 	var value = document.getElementById("in").value;
 	if (value !== last) {
 		last = value;
-		var aff=balEq(document.getElementById("in").value);
+		var aff = balEq(document.getElementById("in").value);
 		makeTable(formulaRatio(aff[0]));
-		if(aff[1]===0){
-			document.getElementById("warning").style.color="white";
-		}
-		else{
-			document.getElementById("warning").style.color="black";
+		if(aff[1] === 0) {
+			document.getElementById("warning").style.color = "white";
+		} else {
+			document.getElementById("warning").style.color = "black";
 		}
 	}
 }
