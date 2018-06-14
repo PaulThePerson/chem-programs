@@ -12,7 +12,8 @@
 }
 input,
 #box p,
-#FOut {
+#FOut,
+#warning {
 	font-family: "Open Sans";
 	margin: 10px;
 	padding: 5px;
@@ -37,7 +38,4 @@ input,
 #topThingy div {
 	display: flex;
 	flex-direction: column;
-}
-#warning{
-	color:red;
 }
