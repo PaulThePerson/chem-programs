@@ -184,8 +184,8 @@ function invertMatrix(M){
   //just this function
   //i did the rest
   //just to be clear
-    
-    
+
+
     //AAAAAAAAAAAAAAAAACCCCCCKKKKK
     //WHAT IS THIS CODE
     //ITS IN SPACES WHATTTTTTT
@@ -340,6 +340,7 @@ function thing() {
         init = false;
 		last = value;
 		var aff = balEq(document.getElementById("in").value);
+		last = aff[0];
         var result = formulaRatio(aff[0]);
         if (result === "Invalid") {
             document.getElementById("warning").innerHTML = "Please complete the equation.";
