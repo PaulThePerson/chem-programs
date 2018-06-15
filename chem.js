@@ -395,6 +395,9 @@ function balEq(equation) {
       }
     }
     console.log(answer);
+		if(checkBal(answer) === 1){
+			return ["your+mom",3]
+		}
     return [answer, 0];
   } catch (TypeError) {
     return [equation, 1];
@@ -431,6 +434,10 @@ function thing() {
 		if(aff[1] === 2){
 			document.getElementById("warning").innerHTML = "Wow. You balanced it.";
       document.getElementById("warning").style.color = "blue";
+		}
+		if(aff[1] === 3){
+			document.getElementById("warning").innerHTML = "Is everything in the correct order?";
+      document.getElementById("warning").style.color = "red";
 		}
   }
 }
