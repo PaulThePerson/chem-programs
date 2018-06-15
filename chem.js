@@ -323,6 +323,9 @@ function checkBal(equation) {
 
 function balEq(equation) {
   try {
+		if(checkBal(equation)===0){
+			return [equation,2];
+		}
     var elems = [];
     var molcs = equation.match(/[A-Z][^+=]*/gm);
     equation.match(/[A-Z][^+=]*/gm).forEach(function(molecule) {
@@ -420,10 +423,15 @@ function thing() {
     if (aff[1] === 0) {
       document.getElementById("warning").innerHTML = "Balancing Successful";
       document.getElementById("warning").style.color = "black";
-    } else {
-      document.getElementById("warning").innerHTML = "Equation could not be balanced.";
-      document.getElementById("warning").style.color = "red"
     }
+		if(aff[1] === 1) {
+      document.getElementById("warning").innerHTML = "Equation could not be balanced.";
+      document.getElementById("warning").style.color = "red";
+    }
+		if(aff[1] === 2){
+			document.getElementById("warning").innerHTML = "Wow. You balanced it.";
+      document.getElementById("warning").style.color = "blue";
+		}
   }
 }
 thing();
