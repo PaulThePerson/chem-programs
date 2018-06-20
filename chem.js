@@ -176,81 +176,61 @@ function makeTable(matrix) {
 
 makeTable(formulaRatio(last));
 
-function invertMatrix(M) {
-  //I didnt make this function. I tried. I failed. SO... you get this code
-  //enjoy.
-  //maybe I can try to make my own later.
-  // source at http://blog.acipo.com/matrix-inversion-in-javascript/
-  //just this function
-  //i did the rest
-  //just to be clear
-
-
-  //AAAAAAAAAAAAAAAAACCCCCCKKKKK
-  //WHAT IS THIS CODE
-  //ITS IN SPACES WHATTTTTTT
-  //ACACACACACACKCKAKCKAKA
-  if (M.length !== M[0].length) {
-    return;
-  }
-  var i = 0,
-    ii = 0,
-    j = 0,
-    dim = M.length,
-    e = 0,
-    t = 0;
-  var I = [],
-    C = [];
-  for (i = 0; i < dim; i += 1) {
-    I[I.length] = [];
-    C[C.length] = [];
-    for (j = 0; j < dim; j += 1) {
-      if (i == j) {
-        I[i][j] = 1;
-      } else {
-        I[i][j] = 0;
-      }
-      C[i][j] = M[i][j];
+function invertMatrix(matrix){
+  var M=JSON.parse(JSON.stringify(matrix));
+  M.forEach(function(row){
+    if(row.length!==M.length){
+      return "error1";
     }
+  })
+  var L=M.length;
+  var I=[]
+  for(var row=0;row<L;row++){
+    I.push([]);
+    for(var column=0;column<L;column++){
+      I[row].push(0);
+    }
+    I[row][row]=1;
   }
-  for (i = 0; i < dim; i += 1) {
-    e = C[i][i];
-    if (e == 0) {
-      for (ii = i + 1; ii < dim; ii += 1) {
-        if (C[ii][i] != 0) {
-          for (j = 0; j < dim; j++) {
-            e = C[i][j];
-            C[i][j] = C[ii][j];
-            C[ii][j] = e;
-            e = I[i][j];
-            I[i][j] = I[ii][j];
-            I[ii][j] = e;
-          }
+  console.log(JSON.parse(JSON.stringify(I)),JSON.parse(JSON.stringify(M)));
+  for(var column=0;column<L;column++){
+   if(M[column][column]===0){
+     for(var downColumn=column;downColumn<L;downColumn++){
+       if(M[downColumn][column]!==0){
+          var S=JSON.parse(JSON.stringify(M[column]));
+          M[column]=JSON.parse(JSON.stringify(M[downColumn]));
+          M[downColumn]=JSON.parse(JSON.stringify(S));
+          S=JSON.parse(JSON.stringify(I[column]));
+          I[column]=JSON.parse(JSON.stringify(I[downColumn]));
+          I[downColumn]=JSON.parse(JSON.stringify(S));
           break;
         }
       }
-      e = C[i][i];
-      if (e == 0) {
-        return
-      }
-    }
-    for (j = 0; j < dim; j++) {
-      C[i][j] = C[i][j] / e;
-      I[i][j] = I[i][j] / e;
-    }
-    for (ii = 0; ii < dim; ii++) {
-      if (ii == i) {
+      if(M[column][column]===0){
+         return "error2";
+       }
+     }
+     for(var row=0; row<L;row++){
+      if(row===column){
         continue;
       }
-      e = C[ii][i];
-      for (j = 0; j < dim; j++) {
-        C[ii][j] -= e * C[i][j];
-        I[ii][j] -= e * I[i][j];
+      var F=M[row][column]/M[column][column];
+      for(var itteration=0; itteration<L; itteration++){
+        M[row][itteration]=M[row][itteration]-F*M[column][itteration];
+        I[row][itteration]=I[row][itteration]-F*I[column][itteration];
       }
+    }
+  }
+  for(var row=0; row<L; row++){
+    var F=M[row][row];
+    for(var column=0; column<L; column++){
+      M[row][column]=M[row][column]/F;
+      I[row][column]=I[row][column]/F;
     }
   }
   return I;
 }
+
 
 function fixReturn(thing) {
   var sum = 0;
