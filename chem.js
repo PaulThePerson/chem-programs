@@ -376,7 +376,7 @@ function balEq(equation) {
     }
     console.log(answer);
 		if(checkBal(answer) === 1){
-			return ["HeHe+YOU=LaMo",3]
+			return ["HeHe+YOU=Lamo",3]
 		}
     return [answer, 0];
   } catch (TypeError) {
